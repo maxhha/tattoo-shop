@@ -1,0 +1,34 @@
+@import "~$commons/variables";
+
+.content {
+    width: 100%;
+    min-height: calc(100vh - #{$header-height} - #{$footer-height});
+    &__inner {
+        width: 100%;
+        background-color: $white;
+        border-radius: 4px;
+    }
+    &__section {
+        margin: 4rem auto 0;
+    }
+}
+
+.face-image {
+    background-color: black;
+    background: url("~$assets/images/face.jpg");
+    width: 100%;
+    height: 70vh;
+    background-size: cover;
+    background-position: 66% 50%;
+    display: flex;
+    flex-direction: row-reverse;
+    &__title {
+        align-self: center;
+        color: white;
+        padding: 1rem;
+        min-width: 16rem;
+        max-width: 33%;
+        font-family:  Oswald;
+        font-size: 64px;
+    }
+}
