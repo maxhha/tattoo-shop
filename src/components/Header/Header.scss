@@ -2,7 +2,6 @@
 
 .header {
     background-color: $white;
-    height: $header-height;
     display: flex;
     padding: 1rem;
     &__side {
@@ -29,8 +28,8 @@
 .nav {
     display: flex;
     justify-content: space-around;
-    font-family: Oswald;
     &__button {
+        font-family: Oswald;
         font-size: 23px;
         padding: 0.5rem 1rem;
         background-color: $white;
