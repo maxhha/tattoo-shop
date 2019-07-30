@@ -1,4 +1,5 @@
 // Content
+import { IStore, StoreSection } from "types";
 import React from "react";
 import classNames from "classnames";
 import "./Content.scss";
@@ -7,10 +8,19 @@ import Section from "./Section";
 
 type Props = {
     className?: string;
+    store: IStore;
 };
 
 class Content extends React.Component<Props> {
+    state = {
+        sections: [] as StoreSection[]
+    }
+    async componentDidMount() {
+        const sections = await this.props.store.getSections();
+        this.setState({sections});
+    }
     render() {
+        const { sections } = this.state;
         return (
             <div
                 className={classNames("content", this.props.className)}
@@ -21,10 +31,13 @@ class Content extends React.Component<Props> {
                             КРУТЫЕ ТАТУХИ ДЕЛАЮТ ТЕБЯ КРУТЫМ!
                         </div>
                     </div>
-                    <Section
-                        className="content__section"
-                        title="Могущественные силы полубогов"
-                        />
+                    {sections.map(({id, title}) => (
+                        <Section
+                            className="content__section"
+                            title={title}
+                            key={id}
+                            />
+                    ))}
                 </div>
             </div>
         );
