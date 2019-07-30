@@ -31,7 +31,7 @@ class Content extends React.Component<Props> {
                             КРУТЫЕ ТАТУХИ ДЕЛАЮТ ТЕБЯ КРУТЫМ!
                         </div>
                     </div>
-                    {sections.map(({id, title}) => (
+                    {sections.slice(0, 3).map(({id, title}) => (
                         <Section
                             className="content__section"
                             title={title}

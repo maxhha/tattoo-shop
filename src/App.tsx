@@ -6,12 +6,9 @@ import Header from 'components/Header';
 import Content from 'components/Content';
 import Footer from 'components/Footer';
 
-import Store from "apis/Store";
+import { IStore } from "types";
 
-
-const App: React.FC = () => {
-  const store = new Store();
-
+const App: React.FC<{store: IStore}> = ({store}) => {
   return (
     <div className="app">
         <Header />

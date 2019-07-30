@@ -4,7 +4,17 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import Store from "apis/Store";
+
+const store = new Store(
+    process.env.REACT_APP_UNSPLASH_APP_ACCESS_KEY,
+    process.env.REACT_APP_UNSPLASH_APP_SECRET);
+
+// Update database here, before hot(App) so it would be called ones
+// after first page load 
+store.updateDatabase();
+
+ReactDOM.render(<App store={store} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
