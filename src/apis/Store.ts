@@ -12,7 +12,7 @@ class Store implements IStore {
     private __sections: string[];
     private __unsplash: any;
     private __database: StoreItem[][];
-    private __databaseUpdatePromise: Promise<void>;
+    private __databaseLoadPromise: Promise<void>;
 
     constructor(ACCESS_APP_KEY : string | undefined, APP_SECRET : string | undefined) {
 
@@ -28,13 +28,52 @@ class Store implements IStore {
         this.__sections = shuffle(possibleSectionNames).slice(0, COUNT_SECTIONS);
         this.__database = [];
 
-        // sets resolved promise like database updated;
-        this.__databaseUpdatePromise = Promise.resolve();
+        // sets resolved promise like database was updated;
+        this.__databaseLoadPromise = Promise.resolve();
     }
 
     async updateDatabase(){
-        console.log('Updating database...');
-        const promise = this.__unsplash
+
+        let database = this.__getDatabaseFromLocalStorage();
+        if (database.length > 0) {
+            console.log('Database was loaded from localStorage.')
+            this.__database = database;
+            return this.__databaseLoadPromise = Promise.resolve();
+        } else {
+            const promise = this.__loadDatabaseFromService();
+            promise.then(() => this.__saveDatabaseToLocalStorage())
+            return this.__databaseLoadPromise = promise;
+        }
+    }
+
+    private __getDatabaseFromLocalStorage() : StoreItem[][]{
+        let db;
+        try {
+            db = localStorage.getItem('db') || "{}";
+            db = JSON.parse(db);
+        } catch(e) {
+            console.error(e);
+            db = {};
+        }
+
+        if ("data" in db) {
+            return db["data"];
+        }
+        return [];
+    }
+
+    private __saveDatabaseToLocalStorage() {
+        try {
+            let db = JSON.stringify({"data": this.__database});
+            localStorage.setItem('db', db);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    private async __loadDatabaseFromService() : Promise<void> {
+        console.log('Loading database from server...');
+        return this.__unsplash
             .search.photos("tattoos", 0, COUNT_ITEMS_PER_SECTION * COUNT_SECTIONS)
             .then(toJson)
             .then((json : any) => {
@@ -49,14 +88,13 @@ class Store implements IStore {
                 this.__database = database;
                 return Promise.resolve();
             });
-        return this.__databaseUpdatePromise = promise;
     }
     // This methods supposed to use as fetch db
     // but unsplash has limits on calls to api
     // so store loades database ones
     // and then returns results from local savings
     async getSections() {
-        return this.__databaseUpdatePromise.then(() =>
+        return this.__databaseLoadPromise.then(() =>
             this.__sections.map((title, i) => {
                 return {id: i.toString(), title};
             })
@@ -64,7 +102,7 @@ class Store implements IStore {
     }
 
     async getItems({ id } : StoreSection) {
-        return this.__databaseUpdatePromise.then(() =>
+        return this.__databaseLoadPromise.then(() =>
             this.__database[parseInt(id)].slice()
         )
     }
