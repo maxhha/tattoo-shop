@@ -40,6 +40,7 @@ class Store implements IStore {
             this.__database = database;
             return this.__databaseLoadPromise = Promise.resolve();
         } else {
+            console.log('Loading database from server...');
             const promise = this.__loadDatabaseFromService();
             promise.then(() => this.__saveDatabaseToLocalStorage())
             return this.__databaseLoadPromise = promise;
@@ -72,7 +73,6 @@ class Store implements IStore {
     }
 
     private async __loadDatabaseFromService() : Promise<void> {
-        console.log('Loading database from server...');
         return this.__unsplash
             .search.photos("tattoos", 0, COUNT_ITEMS_PER_SECTION * COUNT_SECTIONS)
             .then(toJson)
