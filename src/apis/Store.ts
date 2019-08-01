@@ -1,20 +1,42 @@
 import { IStore, StoreSection, StoreItem} from "types";
 import Unsplash, {toJson} from "unsplash-js";
-import { shuffle } from "lodash";
+import { sample, capitalize } from "lodash";
+
+type LocalDatabase = {
+    sections: StoreSection[];
+    items: {[sectionId: string]: StoreItem[]};
+}
 
 
 const COUNT_ITEMS_PER_SECTION = 25;
 const COUNT_SECTIONS = 10;
 
-const possibleSectionNames = "Нянька для жесткого дракона<br>Моё наглое путешествие<br>Мой личный квест<br>Пепел умирающей тревоги<br>Жена лютого демона<br>Колледж темных некромантов<br>Громадное молчание<br>Мой талантливый обход<br>Университет мятежных стрелков<br>Сломанная кукла<br>Храбрая буря<br>Потрясающий исход<br>Красивая борьба<br>Храбрый закон<br>Седьмая стена<br>Раскрытие вашей храбрости<br>Небо после крови<br>Возлюбленная последнего герцога<br>Душа потерянного лорда<br>Боль моей апатии".split('<br>');
+const sectionNames = "Популярные;Новые;Яркие;Популярные у девушек;Популярные у мужчин;Детские;Черные;Стойкие;Крупные;Со смыслом".split(";");
+const tattooAdjective = ";Глубинн ыйай;Высок ийая;Широк ийая;Сильн ыйая;Крепк ийая;Узк ийая;Длинн ыйая;Колюч ийая;Немыслим ыйая;Абстрактн ыйая;Холодн ыйая;Горяч ыйая;Мрачн ыйая;Черн ыйяя;Кровав ыйая;Млечн ыйая;Бесконечн ыйая;Весёл ыйая;Светл ыйая".split(';')
+const tattooNoun = "м день;м джек;м путь;м Бог;м конёк;м крест;ж коса;ж головоломка;ж загадка;ж бабочка;м череп;м гроб;м цветок;ж ваза;м маяк;м дракон;м порез;ж птичка;ж пиратка;м пират;м бриллиант".split(';')
+
+function getRandomTattooName(): string{
+    const adj = sample(tattooAdjective) as string;
+    const noun = sample(tattooNoun) as string;
+    return capitalize((adj.replace(/.(..)(..)$/, noun[0] === "м" ? "$1" : "$2")
+        + noun.replace(/[мж]/, "")
+    ).trim());
+}
+
+function getRandomTattooPrice() : string {
+    return (Math.floor(Math.random()*60 + 2)*25).toString()
+}
 
 class Store implements IStore {
-    private __sections: string[];
     private __unsplash: any;
-    private __database: StoreItem[][];
+    private __database: LocalDatabase | undefined;
     private __databaseLoadPromise: Promise<void>;
 
-    constructor(ACCESS_APP_KEY : string | undefined, APP_SECRET : string | undefined) {
+    constructor(
+        ACCESS_APP_KEY : string | undefined,
+        APP_SECRET : string | undefined,
+        private __version? : string | undefined
+    ) {
 
         if (ACCESS_APP_KEY === undefined || APP_SECRET === undefined) {
             throw Error('Unsplash key or secret is undefined');
@@ -25,29 +47,31 @@ class Store implements IStore {
             secret: APP_SECRET as string
         });
 
-        this.__sections = shuffle(possibleSectionNames).slice(0, COUNT_SECTIONS);
-        this.__database = [];
-
-        // sets resolved promise like database was updated;
-        this.__databaseLoadPromise = Promise.resolve();
+        this.__databaseLoadPromise = this.__loadDatabase();
     }
 
-    async updateDatabase(){
+    setVersion = (v:string) => {
+        if (this.__version === v)
+            return;
+        this.__version = v;
+        this.__databaseLoadPromise = this.__loadDatabase();
+    }
 
+    private async __loadDatabase(){
         let database = this.__getDatabaseFromLocalStorage();
-        if (database.length > 0) {
+        if (database) {
             console.log('Database was loaded from localStorage.')
             this.__database = database;
-            return this.__databaseLoadPromise = Promise.resolve();
+            return Promise.resolve();
         } else {
             console.log('Loading database from server...');
             const promise = this.__loadDatabaseFromService();
             promise.then(() => this.__saveDatabaseToLocalStorage())
-            return this.__databaseLoadPromise = promise;
+            return promise;
         }
     }
 
-    private __getDatabaseFromLocalStorage() : StoreItem[][]{
+    private __getDatabaseFromLocalStorage() : LocalDatabase | undefined{
         let db;
         try {
             db = localStorage.getItem('db') || "{}";
@@ -56,16 +80,19 @@ class Store implements IStore {
             console.error(e);
             db = {};
         }
-
-        if ("data" in db) {
+        if (!this.__version) {
+            this.__version = db.v;
+        }
+        const isTargetVersion = ("v" in db && db.v === this.__version);
+        if ("data" in db && isTargetVersion) {
             return db["data"];
         }
-        return [];
+        return undefined;
     }
 
     private __saveDatabaseToLocalStorage() {
         try {
-            let db = JSON.stringify({"data": this.__database});
+            let db = JSON.stringify({"data": this.__database, "v": this.__version});
             localStorage.setItem('db', db);
         } catch (e) {
             console.error(e);
@@ -77,15 +104,36 @@ class Store implements IStore {
             .search.photos("tattoos", 0, COUNT_ITEMS_PER_SECTION * COUNT_SECTIONS)
             .then(toJson)
             .then((json : any) => {
-                const database : StoreItem[][] = [];
-                for(let i = 0; i < COUNT_SECTIONS; i++)
-                    database.push([]);
+                const database : LocalDatabase = {
+                    sections: [],
+                    items: {},
+                }
+
+                for(let i = 0; i < COUNT_SECTIONS; i++) {
+                    const sectionId = i.toString()
+                    database.sections.push({
+                        id: sectionId,
+                        title: sectionNames[i]
+                    });
+                    database.items[sectionId] = [];
+                }
 
                 json.results.forEach(
-                    ({urls:{raw}, id} : any, i : number) =>
-                    database[i % COUNT_SECTIONS].push({id, imageUrl: raw})
+                    ({urls:{raw}, id} : any, i : number) => {
+                        const sectionId = database.sections[i % COUNT_SECTIONS].id;
+
+                        database.items[sectionId].push({
+                            id,
+                            imageUrl: raw,
+                            title: getRandomTattooName(),
+                            price: getRandomTattooPrice(),
+                        });
+                    }
                 );
                 this.__database = database;
+                return Promise.resolve();
+            }).catch((e : Error) => {
+                console.error(e);
                 return Promise.resolve();
             });
     }
@@ -93,17 +141,15 @@ class Store implements IStore {
     // but unsplash has limits on calls to api
     // so store loades database ones
     // and then returns results from local savings
-    async getSections() {
+    getSections = async () => {
         return this.__databaseLoadPromise.then(() =>
-            this.__sections.map((title, i) => {
-                return {id: i.toString(), title};
-            })
+            this.__database ? this.__database.sections : []
         );
     }
 
-    async getItems({ id } : StoreSection) {
+    getItems = async ({ id } : StoreSection) => {
         return this.__databaseLoadPromise.then(() =>
-            this.__database[parseInt(id)].slice()
+            this.__database ? this.__database.items[id] : []
         )
     }
 }

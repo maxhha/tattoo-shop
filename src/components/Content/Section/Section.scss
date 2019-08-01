@@ -34,7 +34,42 @@
     }
 }
 
-.tattoo-image {
-    object-fit: cover;
-    border-radius: 1rem;
+.tattoo {
+    cursor: pointer;
+    position: relative;
+    &__image {
+        object-fit: cover;
+        border-radius: 1rem;
+    }
+    &__description {
+        opacity: 0;
+        transition: 0.2s;
+        position: relative;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    &__title {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        font-family: "Open Sans";
+        font-weight: 500;
+        display: inline-block;
+        margin: 1rem;
+    }
+    &__price-wrapper {
+        position: absolute;
+        left: 100%;
+        top: 100%;
+        transform: translate(-100%, -100%);
+        padding: 1rem;
+    }
+    &__price {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        font-family: "Oswald";
+        font-weight: 500;
+        display: inline-block;
+        margin: 0;
+    }
 }

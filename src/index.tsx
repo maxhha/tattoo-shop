@@ -10,9 +10,6 @@ const store = new Store(
     process.env.REACT_APP_UNSPLASH_APP_ACCESS_KEY,
     process.env.REACT_APP_UNSPLASH_APP_SECRET);
 
-// Update database here, before hot(App) so it would be called ones
-// after first page load 
-store.updateDatabase();
 
 ReactDOM.render(<App store={store} />, document.getElementById('root'));
 
