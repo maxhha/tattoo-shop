@@ -1,0 +1,23 @@
+@import "~$commons/variables";
+
+.tattoo-page {
+    background-color: $white;
+    border-radius: 1rem;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    height: 100%;
+    &__image-wrapper {
+        flex: 1 0 20rem;
+        max-height: 80vh;
+        height: 100%;
+    }
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    &__info {
+        flex: 1 0 20rem;
+    }
+}

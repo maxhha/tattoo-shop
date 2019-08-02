@@ -152,6 +152,17 @@ class Store implements IStore {
             this.__database ? this.__database.items[id] : []
         )
     }
+
+    findItem = async (id:string) => {
+        return  this.__databaseLoadPromise.then(() => {
+            const item = this.__database && (
+                Object.values(this.__database.items)
+                    .flat()
+                    .filter(item => item.id === id)[0]
+            );
+            return item || null;
+        });
+    }
 }
 
 export default Store;
