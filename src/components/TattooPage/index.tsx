@@ -40,13 +40,14 @@ const TattooPage : React.FC<Props> = (props) => {
                 <div className="tattoo-page__image-wrapper">
                     <img
                         className="tattoo-page__image"
-                        src={`${item.imageUrl}?auto=format&fit=crop&w=640&q=80`}
+                        src={`${item.imageUrl}?auto=format&fit=crop&w=640&q=90`}
                         alt={item.title}
                     />
                 </div>
                 <div className="tattoo-page__info">
                     <h2 className="tattoo-page__title">{item.title}</h2>
-                    <p className="tattoo-page__description"> Очень большое описание картинки </p>
+                    <h3 className="tattoo-page__price">{item.price+"р"}</h3>
+                    <p className="tattoo-page__description"> Высокий уровень вовлечения представителей целевой аудитории является четким доказательством простого факта: сплочённость команды профессионалов в значительной степени обусловливает важность соответствующих условий активизации. А ещё стремящиеся вытеснить традиционное производство, нанотехнологии ограничены исключительно образом мышления. </p>
                 </div>
                 {isModal && (
                     <button

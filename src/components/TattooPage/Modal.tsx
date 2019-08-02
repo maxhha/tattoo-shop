@@ -1,6 +1,7 @@
 import React from "react";
 import { RouteChildrenProps, Redirect } from "react-router";
 import classNames from "classnames";
+import {RemoveScroll} from "react-remove-scroll";
 
 import "./Modal.scss";
 import TattooPage from "components/TattooPage";
@@ -13,11 +14,11 @@ const TattooPageModal : React.FC<Props> = (props) => {
 
     const params = props.match && props.match.params;
     if (params && params.id) {
-        return (<div className={classNames("tattoo-modal", props.className)} onClick={(e) => {
+        return (<div className={classNames("tattoo-modal", props.className, RemoveScroll.classNames.fullWidth)} onClick={(e) => {
             e.stopPropagation();
             props.history.goBack();
         }}>
-                <TattooPage />
+                <RemoveScroll className="tattoo-modal__inner"><TattooPage /> </RemoveScroll>
             </div>);
     } else {
         return <Redirect to="/" />;

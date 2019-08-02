@@ -1,5 +1,10 @@
 
 .tattoo-modal {
-    padding: 2rem;
     background-color: rgba(0,0,0,0.5);
+    padding: 2rem;
+    &__inner {
+        height: 100%;
+        max-width: 992px;
+        margin: auto;
+    }
 }
