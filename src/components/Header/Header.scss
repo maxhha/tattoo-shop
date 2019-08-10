@@ -42,4 +42,44 @@
             background-color: $bg-color1;
         }
     }
+    &__menu {
+        padding: 0.5rem 1rem;
+        font-family: Oswald;
+        font-size: 23px;
+        color:$primary;
+        &-item {
+            font-size: 18px;
+            font-family: "Open Sans";
+            color:$primary;
+            text-decoration: none;
+        }
+    }
+}
+
+.menu {
+    position: relative;
+    &:hover &__popup-list {
+        opacity: 1;
+        transform: translate(-1.25rem, 0.5rem)
+    }
+    &__popup-list {
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        background-color: $white;
+        border-radius: 4px;
+        box-shadow: 0 0 4px rgba(0,0,0,0.2);
+        transform: translate(-1.25rem, 0);
+        opacity: 0;
+        transition: 0.2s;
+    }
+    &__item {
+        padding: 0.5rem 1.25rem;
+        list-style-type: none;
+        cursor: pointer;
+
+        &:hover{
+            background-color: $bg-color1;
+        }
+    }
 }
