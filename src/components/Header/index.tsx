@@ -1,7 +1,8 @@
 // Header
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import LinkButton from 'components/commons/LinkButton';
+import Menu from "./Menu";
 import classNames from "classnames";
 import logo from "assets/images/logo.png";
 import "./Header.scss";
@@ -22,20 +23,27 @@ const Header : React.SFC<Props> = (props) => {
     return (
         <header className={classNames("header", props.className)}>
             <nav className="nav header__side header__nav">
-                <div className="menu nav__menu">
-                    <div className="menu__title">Категроии</div>
-                    <ul className="menu__popup-list">
-                        {sections.map(({title}) =>
-                            <li className="menu__item">
-                                <Link to="/" className="nav__menu-item" >{title}</Link>
-                            </li>
-                        )}
-                    </ul>
-                </div>
+                <Menu className="nav__menu" title="Категроии">
+                    {sections.map(({id, title}) => (hide : () => void) =>
+                            <LinkButton
+                                to={`/section/${id}`}
+                                className="nav__button nav__menu-item"
+                                key={id}
+                                onClick={hide}
+                            >{title}</LinkButton>
+                    )}
+                </Menu>
                 <LinkButton to='/about' className="button nav__button">О нас</LinkButton>
                 <button className="button nav__button">Контакты</button>
             </nav>
-            <img className="header__logo" src={logo} alt={"logo"}/>
+            <Route render={({history})=>
+                <img
+                    className="header__logo"
+                    onClick={() => history.push('/')}
+                    src={logo}
+                    alt={"logo"}
+                />
+            }/>
             <nav className="nav header__side header__nav">
                 <button className="button nav__button">Корзина</button>
                 <button className="button nav__button">Оплата</button>

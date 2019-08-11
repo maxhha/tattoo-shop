@@ -10,6 +10,8 @@ import StoreContext from "apis/StoreContext";
 import TattooPageModal from "components/TattooPage/Modal";
 import About from "./About";
 import Home from "./Home";
+import Section from "./Section";
+import { StoreItem } from "types";
 
 type Props = {
     className?: string;
@@ -35,6 +37,18 @@ const Content : React.FC<Props> = (props) => {
                             path="/about"
                             component={About}
                         />,
+                        <Route
+                            path="/section/:id"
+                            render={({match}) => {
+                                if (match.params.id)
+                                    return (
+                                        <SectionPage
+                                            sectionId={match.params.id}
+                                        />
+                                    );
+                                return <Redirect to="/" />;
+                            }}
+                        />,
                         <Route render={() => <Redirect to="/" />} />
                 ]}
                 modalRoute={
@@ -46,5 +60,48 @@ const Content : React.FC<Props> = (props) => {
         </div>
     );
 }
+
+const SectionPage : React.FC<{sectionId: string}> = ({sectionId}) => {
+    const [section,setSection] = useState<StoreSection | null>(null);
+    const [items,setItems] = useState<StoreItem[]>([]);
+    const [loaded,setLoaded] = useState(false);
+
+    const { findSection, getItems } = useContext(StoreContext);
+
+    useEffect(() => {
+        findSection(sectionId)
+            .then((section) => {
+                if (section) {
+                    setSection(section);
+                    return getItems(section);
+                } else {
+                    setLoaded(true);
+                    return [];
+                }
+            })
+            .then((items) => {
+                setItems(items);
+                setLoaded(true);
+            })
+    }, [sectionId, findSection, getItems]);
+
+    if (loaded && section && items.length){
+        return (<div className="content__inner">
+            <Section
+                className="content__section"
+                title={section.title}
+                items={items}
+                />
+        </div>)
+    } else if (loaded && !section) {
+        return (<div className="content__inner">
+            <h2>Not found</h2>
+        </div>)
+    } else {
+        return (<div className="content__inner">
+            <h2>Loading...</h2>
+        </div>)
+    }
+};
 
 export default Content;

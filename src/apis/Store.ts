@@ -13,7 +13,7 @@ const COUNT_SECTIONS = 10;
 
 const sectionNames = "Популярные;Новые;Яркие;Популярные у девушек;Популярные у мужчин;Детские;Черные;Стойкие;Крупные;Со смыслом".split(";");
 const tattooAdjective = ";Глубинн ыйай;Высок ийая;Широк ийая;Сильн ыйая;Крепк ийая;Узк ийая;Длинн ыйая;Колюч ийая;Немыслим ыйая;Абстрактн ыйая;Холодн ыйая;Горяч ыйая;Мрачн ыйая;Черн ыйяя;Кровав ыйая;Млечн ыйая;Бесконечн ыйая;Весёл ыйая;Светл ыйая".split(';')
-const tattooNoun = "м день;м джек;м путь;м Бог;м конёк;м крест;ж коса;ж головоломка;ж загадка;ж бабочка;м череп;м гроб;м цветок;ж ваза;м маяк;м дракон;м порез;ж птичка;ж пиратка;м пират;м бриллиант".split(';')
+const tattooNoun = "м день;м джек;м путь;м Бог;м конёк;м крест;ж коса;ж головоломка;ж загадка;ж бабочка;м череп;м гроб;м цветок;ж ваза;м маяк;м дракон;м кот;ж птичка;ж пиратка;м пират;м бриллиант".split(';')
 
 function getRandomTattooName(): string{
     const adj = sample(tattooAdjective) as string;
@@ -147,7 +147,17 @@ class Store implements IStore {
         );
     }
 
-    getItems = async ({ id } : StoreSection) => {
+    findSection = async (id: string) => {
+        return  this.__databaseLoadPromise.then(() => {
+            const section = this.__database && (
+                this.__database.sections
+                    .find(section => section.id === id)
+            );
+            return section || null;
+        });
+    }
+
+    getItems = async ({id} : StoreSection) => {
         return this.__databaseLoadPromise.then(() =>
             this.__database ? this.__database.items[id] : []
         )
@@ -158,7 +168,7 @@ class Store implements IStore {
             const item = this.__database && (
                 Object.values(this.__database.items)
                     .flat()
-                    .filter(item => item.id === id)[0]
+                    .find(item => item.id === id)
             );
             return item || null;
         });

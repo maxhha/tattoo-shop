@@ -13,6 +13,7 @@ export type StoreItem = {
 export interface IStore {
     setVersion: (version:string) => void;
     getSections: () => Promise<StoreSection[]>;
+    findSection: (sectionId: string) => Promise<StoreSection | null>;
     getItems: (section: StoreSection) => Promise<StoreItem[]>;
-    findItem: (id: string) => Promise<StoreItem | null>;
+    findItem: (itemId: string) => Promise<StoreItem | null>;
 }
