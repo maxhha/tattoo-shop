@@ -1,6 +1,6 @@
 // Header
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import LinkButton from 'components/commons/LinkButton';
 import Menu from "./Menu";
 import classNames from "classnames";
@@ -41,7 +41,7 @@ const Header : React.SFC<Props> = (props) => {
                     className="header__logo"
                     onClick={() => history.push('/')}
                     src={logo}
-                    alt={"logo"}
+                    alt="Logo"
                 />
             }/>
             <nav className="nav header__side header__nav">

@@ -6,6 +6,7 @@ import classNames from "classnames";
 import { StoreItem } from "types";
 
 import StoreContext from "apis/StoreContext";
+import CartContext from "components/CartContext";
 
 interface MatchProps {
     id: string
@@ -19,15 +20,22 @@ const TattooPage : React.FC<Props> = (props) => {
     const params = props.match && props.match.params;
     const { id } = params || {id: undefined};
 
-    const [item, setItem] = useState(null as (StoreItem | null));
-    const [loading, setLoading] = useState(true);
+    const [{item, loading}, setLoaderState] = useState<{
+        item: StoreItem | null,
+        loading: boolean
+    }>({
+        item: null, loading: true
+    });
 
     const { findItem } = useContext(StoreContext);
+    const [cart, dispatchCart] = useContext(CartContext);
+    const addedToCart = !!id && !!cart.items.find(i => i.id === id);
 
+    console.log(`addedToCart ${addedToCart}`);
     useEffect(() => {
         if (id)
-            findItem(id).then((item) => {setItem(item); setLoading(false)});
-    },[findItem, setItem, setLoading, id]);
+            findItem(id).then((item) => setLoaderState({item, loading: false}));
+    },[findItem, setLoaderState, id]);
 
     const isModal = (!props.location.state || !props.location.state.modal);
 
@@ -47,6 +55,23 @@ const TattooPage : React.FC<Props> = (props) => {
                 <div className="tattoo-page__info">
                     <h2 className="tattoo-page__title">{item.title}</h2>
                     <h3 className="tattoo-page__price">{item.price+"р"}</h3>
+                    <button
+                        className="tattoo-page__to-cart"
+                        onClick={() => {
+                            if (addedToCart)
+                                dispatchCart({
+                                    type: "remove",
+                                    id: item.id
+                                })
+                            else if (!loading)
+                                dispatchCart({
+                                    type: "add",
+                                    item: item
+                                })
+                        }}
+                    >
+                        {addedToCart ? "Убрать из корзины" : "В корзину"}
+                    </button>
                     <p className="tattoo-page__description"> Высокий уровень вовлечения представителей целевой аудитории является четким доказательством простого факта: сплочённость команды профессионалов в значительной степени обусловливает важность соответствующих условий активизации. А ещё стремящиеся вытеснить традиционное производство, нанотехнологии ограничены исключительно образом мышления. </p>
                 </div>
                 {isModal && (
