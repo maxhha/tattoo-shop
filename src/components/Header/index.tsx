@@ -47,7 +47,7 @@ const Header : React.SFC<Props> = (props) => {
             }/>
             <nav className="nav header__side header__nav">
                 <LinkButton to='/cart' className="button nav__button">Корзина</LinkButton>
-                <button className="button nav__button">Оплата</button>
+                <LinkButton to='/payment' className="button nav__button">Оплата</LinkButton>
                 <button className="button nav__button">Доставка</button>
             </nav>
         </header>

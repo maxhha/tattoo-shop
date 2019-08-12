@@ -11,6 +11,7 @@ import TattooPageModal from "components/TattooPage/Modal";
 import About from "./About";
 import Home from "./Home";
 import Cart from "./Cart";
+import Payment from "./Payment";
 import Section from "./Section";
 import { StoreItem } from "types";
 
@@ -41,6 +42,10 @@ const Content : React.FC<Props> = (props) => {
                         <Route
                             path="/cart"
                             component={Cart}
+                        />,
+                        <Route
+                            path="/payment"
+                            component={Payment}
                         />,
                         <Route
                             path="/section/:id"
