@@ -4,6 +4,9 @@
     background-color: $white;
     display: flex;
     padding: 1rem;
+    @media(max-width: 960px) {
+        flex-direction: column;
+    }
     &__side {
         flex: 1 0 2rem;
     }
@@ -19,9 +22,19 @@
         &:hover {
             transform: translateY(-0.5rem);
         }
+        @media(min-width: 560px) and (max-width: 960px)  {
+            transform: translateX(25vw);
+        }
+        @media(max-width: 560px) {
+            align-self: center;
+        }
     }
     &__nav {
         align-self: flex-end;
+        @media(max-width: 560px) {
+            flex-direction: column;
+            align-self: center;
+        }
     }
 }
 
