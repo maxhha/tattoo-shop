@@ -35,7 +35,7 @@ const Header : React.SFC<Props> = (props) => {
                     )}
                 </Menu>
                 <LinkButton to='/about' className="button nav__button">О нас</LinkButton>
-                <button className="button nav__button">Контакты</button>
+                <LinkButton to='/contacts' className="button nav__button">Контакты</LinkButton>
             </nav>
             <Route render={({history})=>
                 <img
@@ -48,7 +48,7 @@ const Header : React.SFC<Props> = (props) => {
             <nav className="nav header__side header__nav">
                 <LinkButton to='/cart' className="button nav__button">Корзина</LinkButton>
                 <LinkButton to='/payment' className="button nav__button">Оплата</LinkButton>
-                <button className="button nav__button">Доставка</button>
+                <LinkButton to='/delivery' className="button nav__button">Доставка</LinkButton>
             </nav>
         </header>
     );

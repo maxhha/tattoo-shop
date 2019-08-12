@@ -12,6 +12,8 @@ import About from "./About";
 import Home from "./Home";
 import Cart from "./Cart";
 import Payment from "./Payment";
+import Delivery from "./Delivery";
+import Contacts from "./Contacts";
 import Section from "./Section";
 import { StoreItem } from "types";
 
@@ -46,6 +48,14 @@ const Content : React.FC<Props> = (props) => {
                         <Route
                             path="/payment"
                             component={Payment}
+                        />,
+                        <Route
+                            path="/delivery"
+                            component={Delivery}
+                        />,
+                        <Route
+                            path="/contacts"
+                            component={Contacts}
                         />,
                         <Route
                             path="/section/:id"
