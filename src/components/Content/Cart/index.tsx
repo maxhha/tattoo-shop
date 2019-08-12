@@ -6,9 +6,10 @@ import "./Cart.scss";
 
 import { CartItem as ICartItem } from "types";
 import CartContext from "components/CartContext";
+import LinkButton from "components/commons/LinkButton";
 
 const Cart : React.FC = () => {
-    const [{items}, dispatchCart] = useContext(CartContext);
+    const [{items, price}, dispatchCart] = useContext(CartContext);
 
     const onHide = (item: ICartItem) =>
         dispatchCart({type: "hide", item});
@@ -31,6 +32,15 @@ const Cart : React.FC = () => {
                         onRemove={onRemove}
                         key={i.id}/>
                 )}
+            </div>
+            <div className="cart__summary">
+                <h2 className="cart__price">
+                    Всего: {price}р
+                </h2>
+                <LinkButton
+                    className="cart-button"
+                    to="/payment"
+                >Перейти к оплате</LinkButton>
             </div>
         </div>
     </div>)

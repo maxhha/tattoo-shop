@@ -3,6 +3,9 @@
 .cart {
     padding: 0 1rem;
     width: 80%;
+    &__price {
+        font-family: "Open Sans";
+    }
 }
 
 .cart-item {

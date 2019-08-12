@@ -13,9 +13,9 @@ import Footer from 'components/Footer';
 import { IStore } from "types";
 
 const App: React.FC<{store: IStore}> = ({store}) => {
-  store.setVersion("1.01");
+  store.setVersion("1.02");
 
-  const cartInitialState = {items: []};
+  const cartInitialState = {items: [], price: 0};
   const cartReduced = useReducer(
       withLocalStorage("cart", CartReducer),
       cartInitialState,
@@ -40,7 +40,6 @@ const App: React.FC<{store: IStore}> = ({store}) => {
 function withLocalStorage<F extends any[], FR>(saveKey: string, fn: (...args: F) => FR){
     return (...args: F) => {
         const result : FR = fn(...args);
-        console.log("local storage");
         try {
             window.localStorage.setItem(saveKey, JSON.stringify(result))
         } catch(e) {
@@ -52,7 +51,7 @@ function withLocalStorage<F extends any[], FR>(saveKey: string, fn: (...args: F)
 
 function reducerLocalStorageInit<S>(saveKey: string){
     return (initState: S) => {
-        let state = initState;
+        let state : S = initState;
         try {
             const data = window.localStorage.getItem(saveKey);
             if (data)

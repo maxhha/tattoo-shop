@@ -6,7 +6,7 @@ export type StoreSection = {
 export interface StoreItem {
     id: string;
     title: string;
-    price: string;
+    price: number;
     imageUrl: string;
 }
 

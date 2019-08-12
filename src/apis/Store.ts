@@ -23,8 +23,8 @@ function getRandomTattooName(): string{
     ).trim());
 }
 
-function getRandomTattooPrice() : string {
-    return (Math.floor(Math.random()*60 + 2)*25).toString()
+function getRandomTattooPrice() : number {
+    return (Math.floor(Math.random()*60 + 2)*25)
 }
 
 class Store implements IStore {
