@@ -5,7 +5,7 @@ import "./Menu.scss";
 
 type Props = {
     className?: string,
-    children: ((hide: () => void) => (React.ReactElement | {key: any}))[],
+    children: ((hide: () => void, hidden: boolean) => (React.ReactElement | {key: any}))[],
     title: string
 }
 
@@ -32,7 +32,7 @@ const Menu : React.SFC<Props> = (props) => {
             <div className="menu__title" onClick={()=>setMenuVisibility(true)}>{props.title}</div>
             <ul className={classNames("menu__popup-list", {'menu__popup-list_active':menuVisible})}>
                 {props.children.map((f) => {
-                    let el = f(hide);
+                    let el = f(hide, !menuVisible);
                     return (<li className="menu__item" key={el.key}>
                         {el}
                     </li>)

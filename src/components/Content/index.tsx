@@ -10,6 +10,7 @@ import StoreContext from "apis/StoreContext";
 import TattooPageModal from "components/TattooPage/Modal";
 import About from "./About";
 import Home from "./Home";
+import Cart from "./Cart";
 import Section from "./Section";
 import { StoreItem } from "types";
 
@@ -36,6 +37,10 @@ const Content : React.FC<Props> = (props) => {
                         <Route
                             path="/about"
                             component={About}
+                        />,
+                        <Route
+                            path="/cart"
+                            component={Cart}
                         />,
                         <Route
                             path="/section/:id"

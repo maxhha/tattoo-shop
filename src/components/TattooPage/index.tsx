@@ -1,6 +1,7 @@
 //Tattoo Page
 import React, { useState, useContext, useEffect } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
+import "components/commons/cart-button.scss";
 import "./TattooPage.scss";
 import classNames from "classnames";
 import { StoreItem } from "types";
@@ -31,7 +32,6 @@ const TattooPage : React.FC<Props> = (props) => {
     const [cart, dispatchCart] = useContext(CartContext);
     const addedToCart = !!id && !!cart.items.find(i => i.id === id);
 
-    console.log(`addedToCart ${addedToCart}`);
     useEffect(() => {
         if (id)
             findItem(id).then((item) => setLoaderState({item, loading: false}));
@@ -56,7 +56,7 @@ const TattooPage : React.FC<Props> = (props) => {
                     <h2 className="tattoo-page__title">{item.title}</h2>
                     <h3 className="tattoo-page__price">{item.price+"р"}</h3>
                     <button
-                        className="tattoo-page__to-cart"
+                        className="cart-button tattoo-page__to-cart"
                         onClick={() => {
                             if (addedToCart)
                                 dispatchCart({

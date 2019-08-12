@@ -1,0 +1,19 @@
+@import "./variables";
+.cart-button {
+    display: inline-block;
+
+    padding: 0.5rem 1rem;
+
+    border: none;
+    border-radius: 4px;
+    background-color: lighten($primary, 25%);
+    outline: none;
+
+    font-family: "Open Sans";
+    color: $white;
+    font-size:24px;
+    font-weight: 400;
+
+
+    cursor: pointer;
+}

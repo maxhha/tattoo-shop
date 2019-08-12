@@ -3,7 +3,7 @@ export type StoreSection = {
     title: string;
 }
 
-export type StoreItem = {
+export interface StoreItem {
     id: string;
     title: string;
     price: string;
@@ -16,4 +16,8 @@ export interface IStore {
     findSection: (sectionId: string) => Promise<StoreSection | null>;
     getItems: (section: StoreSection) => Promise<StoreItem[]>;
     findItem: (itemId: string) => Promise<StoreItem | null>;
+}
+
+export interface CartItem extends StoreItem {
+    hidden: boolean;
 }

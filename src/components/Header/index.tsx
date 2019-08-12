@@ -24,12 +24,13 @@ const Header : React.SFC<Props> = (props) => {
         <header className={classNames("header", props.className)}>
             <nav className="nav header__side header__nav">
                 <Menu className="nav__menu" title="Категроии">
-                    {sections.map(({id, title}) => (hide : () => void) =>
+                    {sections.map(({id, title}) => (hide : () => void, hidden: boolean) =>
                             <LinkButton
                                 to={`/section/${id}`}
                                 className="nav__button nav__menu-item"
                                 key={id}
                                 onClick={hide}
+                                disabled={hidden}
                             >{title}</LinkButton>
                     )}
                 </Menu>
@@ -45,7 +46,7 @@ const Header : React.SFC<Props> = (props) => {
                 />
             }/>
             <nav className="nav header__side header__nav">
-                <button className="button nav__button">Корзина</button>
+                <LinkButton to='/cart' className="button nav__button">Корзина</LinkButton>
                 <button className="button nav__button">Оплата</button>
                 <button className="button nav__button">Доставка</button>
             </nav>
