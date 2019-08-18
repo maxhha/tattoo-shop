@@ -48,24 +48,33 @@ export const CartReducer = (state : CartState, action : Action) => {
                 price: item ? state.price - item.price : state.price
             }
         } case 'show': {
+            const item = action.item;
+            const newItem = {...item, hidden: false};
             let price = state.price;
-            if (action.item.hidden) {
-                price += action.item.price
-                action.item.hidden = false;
+            console.log("show");
+            console.log(item);
+            if (item.hidden) {
+                price += item.price;
             }
             return {
                 ...state,
+                items:
+                    state.items.map(it => it === item ? newItem : it),
                 price
             }
         } case 'hide': {
+            const item = action.item;
+            const newItem = {...item, hidden: true};
             let price = state.price;
-            if (!action.item.hidden) {
-                price -= action.item.price
-                action.item.hidden = false;
+            console.log("hide");
+            console.log(item);
+            if (!item.hidden) {
+                price -= item.price;
             }
-            action.item.hidden = true;
             return {
                 ...state,
+                items:
+                    state.items.map(it => it === item ? newItem : it),
                 price
             }
         }
