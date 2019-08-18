@@ -51,8 +51,7 @@ export const CartReducer = (state : CartState, action : Action) => {
             const item = action.item;
             const newItem = {...item, hidden: false};
             let price = state.price;
-            console.log("show");
-            console.log(item);
+            
             if (item.hidden) {
                 price += item.price;
             }
@@ -66,8 +65,7 @@ export const CartReducer = (state : CartState, action : Action) => {
             const item = action.item;
             const newItem = {...item, hidden: true};
             let price = state.price;
-            console.log("hide");
-            console.log(item);
+
             if (!item.hidden) {
                 price -= item.price;
             }

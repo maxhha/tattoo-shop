@@ -60,11 +60,13 @@ class Store implements IStore {
     private async __loadDatabase(){
         let database = this.__getDatabaseFromLocalStorage();
         if (database) {
-            console.log('Database was loaded from localStorage.')
+            if (process.env.NODE_ENV === "development")
+                console.log('Database was loaded from localStorage.');
             this.__database = database;
             return Promise.resolve();
         } else {
-            console.log('Loading database from server...');
+            if (process.env.NODE_ENV === "development")
+                console.log('Loading database from server...');
             const promise = this.__loadDatabaseFromService();
             promise.then(() => this.__saveDatabaseToLocalStorage())
             return promise;
