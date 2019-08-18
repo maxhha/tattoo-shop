@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "02f172e292556be39ba173480eb98a9c",
+    "revision": "f89a354ff229d602bd2a54f67bf60730",
     "url": "/tattoo-shop/index.html"
   },
   {
-    "revision": "5f97890a5e4a275a5141",
+    "revision": "61ad4ce4c7260fe930f9",
     "url": "/tattoo-shop/static/css/2.764ccc25.chunk.css"
   },
   {
-    "revision": "d5222b459b8089c68863",
+    "revision": "f8626a2ab40608d101db",
     "url": "/tattoo-shop/static/css/main.8a892509.chunk.css"
   },
   {
-    "revision": "5f97890a5e4a275a5141",
-    "url": "/tattoo-shop/static/js/2.aada7dd3.chunk.js"
+    "revision": "61ad4ce4c7260fe930f9",
+    "url": "/tattoo-shop/static/js/2.3834af67.chunk.js"
   },
   {
-    "revision": "d5222b459b8089c68863",
-    "url": "/tattoo-shop/static/js/main.83e81662.chunk.js"
+    "revision": "f8626a2ab40608d101db",
+    "url": "/tattoo-shop/static/js/main.95bef1e1.chunk.js"
   },
   {
     "revision": "d6a9fa27b963cd5cdbca",
