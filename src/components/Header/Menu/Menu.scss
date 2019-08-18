@@ -19,9 +19,11 @@
         transform: translate(-1.25rem, 0);
         opacity: 0;
         transition: 0.2s;
+        visibility: hidden;
         &_active {
             opacity: 1;
-            transform: translate(-1.25rem, 0.5rem)
+            transform: translate(-1.25rem, 0.5rem);
+            visibility: visible;
         }
         z-index: 100;
     }

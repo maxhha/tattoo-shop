@@ -1,6 +1,6 @@
 import { hot } from "react-hot-loader/root";
 import React, { useReducer } from 'react';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {HashRouter as Router} from 'react-router-dom';
 import './App.scss';
 
 import StoreContext from "apis/StoreContext";
