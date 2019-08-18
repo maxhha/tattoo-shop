@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f89a354ff229d602bd2a54f67bf60730",
+    "revision": "252fb0acc2e0175d34e41dd1f289d32c",
     "url": "/tattoo-shop/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tattoo-shop/static/css/2.764ccc25.chunk.css"
   },
   {
-    "revision": "f8626a2ab40608d101db",
+    "revision": "bad79f07485223a684ea",
     "url": "/tattoo-shop/static/css/main.8a892509.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/tattoo-shop/static/js/2.3834af67.chunk.js"
   },
   {
-    "revision": "f8626a2ab40608d101db",
-    "url": "/tattoo-shop/static/js/main.95bef1e1.chunk.js"
+    "revision": "bad79f07485223a684ea",
+    "url": "/tattoo-shop/static/js/main.7e350bdd.chunk.js"
   },
   {
     "revision": "d6a9fa27b963cd5cdbca",

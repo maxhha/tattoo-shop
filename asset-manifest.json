@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/tattoo-shop/static/css/main.8a892509.chunk.css",
-    "main.js": "/tattoo-shop/static/js/main.95bef1e1.chunk.js",
-    "main.js.map": "/tattoo-shop/static/js/main.95bef1e1.chunk.js.map",
+    "main.js": "/tattoo-shop/static/js/main.7e350bdd.chunk.js",
+    "main.js.map": "/tattoo-shop/static/js/main.7e350bdd.chunk.js.map",
     "runtime~main.js": "/tattoo-shop/static/js/runtime~main.50c9aa78.js",
     "runtime~main.js.map": "/tattoo-shop/static/js/runtime~main.50c9aa78.js.map",
     "static/css/2.764ccc25.chunk.css": "/tattoo-shop/static/css/2.764ccc25.chunk.css",
     "static/js/2.3834af67.chunk.js": "/tattoo-shop/static/js/2.3834af67.chunk.js",
     "static/js/2.3834af67.chunk.js.map": "/tattoo-shop/static/js/2.3834af67.chunk.js.map",
     "index.html": "/tattoo-shop/index.html",
-    "precache-manifest.4f9f7169c51b8fdc81edbabe6663534d.js": "/tattoo-shop/precache-manifest.4f9f7169c51b8fdc81edbabe6663534d.js",
+    "precache-manifest.057e5b1d6a253b450602030e17352c3d.js": "/tattoo-shop/precache-manifest.057e5b1d6a253b450602030e17352c3d.js",
     "service-worker.js": "/tattoo-shop/service-worker.js",
     "static/css/2.764ccc25.chunk.css.map": "/tattoo-shop/static/css/2.764ccc25.chunk.css.map",
     "static/css/main.8a892509.chunk.css.map": "/tattoo-shop/static/css/main.8a892509.chunk.css.map",
